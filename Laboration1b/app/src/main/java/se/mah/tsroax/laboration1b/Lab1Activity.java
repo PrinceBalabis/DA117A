@@ -1,6 +1,7 @@
 package se.mah.tsroax.laboration1b;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ public class Lab1Activity extends Activity {
     private EditText etPhone;
     private EditText etEmail;
     private TextView tvSummary;
+    private TextView tvName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +23,12 @@ public class Lab1Activity extends Activity {
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);
         tvSummary = (TextView) findViewById(R.id.tvSummary);
+        tvName = (TextView) findViewById(R.id.tvName);
         Button bnSummary = (Button) findViewById(R.id.bnSummary);
-        bnSummary.setOnClickListener(new buttonListener());
+        bnSummary.setOnClickListener(new ButtonListener());
+        Button bnColor = (Button) findViewById(R.id.bnColor);
+        bnColor.setOnClickListener(new ChangeColor());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,13 +49,11 @@ public class Lab1Activity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class buttonListener implements View.OnClickListener {
+    private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             String str = summary();
             tvSummary.setText(str);
-            //tvSummary.setText("test");
-
         }
 
         private String summary() {
@@ -60,6 +62,19 @@ public class Lab1Activity extends Activity {
                     ", phone=" + etPhone.getText().toString() +
                     ", email=" + etEmail.getText().toString();
             return res;
+        }
+    }
+
+    private class ChangeColor implements View.OnClickListener {
+        private boolean redColor = true;
+        @Override
+        public void onClick(View v) {
+            if (redColor) {
+                tvName.setTextColor(0xFFFF6600);
+            } else {
+                tvName.setTextColor(Color.RED);
+            }
+            redColor = !redColor;
         }
     }
 }
