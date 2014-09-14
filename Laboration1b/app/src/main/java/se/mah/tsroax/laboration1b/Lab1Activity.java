@@ -19,16 +19,25 @@ public class Lab1Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab1);
-        etName = (EditText) findViewById(R.id.etName);
-        etPhone = (EditText) findViewById(R.id.etPhone);
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        tvSummary = (TextView) findViewById(R.id.tvSummary);
-        tvName = (TextView) findViewById(R.id.tvName);
+        initializeComponents();
+        registerListeners();
+    }
+
+    private void registerListeners() {
         Button bnSummary = (Button) findViewById(R.id.bnSummary);
         bnSummary.setOnClickListener(new ButtonListener());
         Button bnColor = (Button) findViewById(R.id.bnColor);
         bnColor.setOnClickListener(new ChangeColor());
     }
+
+    private void initializeComponents() {
+        etName = (EditText) findViewById(R.id.etName);
+        etPhone = (EditText) findViewById(R.id.etPhone);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        tvSummary = (TextView) findViewById(R.id.tvSummary);
+        tvName = (TextView) findViewById(R.id.tvName);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,6 +76,7 @@ public class Lab1Activity extends Activity {
 
     private class ChangeColor implements View.OnClickListener {
         private boolean redColor = true;
+
         @Override
         public void onClick(View v) {
             if (redColor) {
