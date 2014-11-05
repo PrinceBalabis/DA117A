@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -24,18 +25,23 @@ import com.princetronics.ekonomi.Fragments.FragmentSectionUtkomst;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
+    // TAG
+    private static final String TAG = "MainActivity";
+
     // Fragment section adapter
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 
-    // TAG
-    private static final String TAG = "MainActivity";
-
+    // SharedPreferences
+    private static SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Sharedpreferences setup
+        settings = getSharedPreferences("anvandare", 0);
 
         loginDialogInit();
         SectionAdapterInit();
