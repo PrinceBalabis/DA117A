@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    // App basic
+    <string name="app_name">Ekonomi</string>
+    <string name="action_settings">Settings</string>
+
+    // FragmentSection
+    <string name="section_oversikt">Översikt</string>
+    <string name="section_inkomst">Inkomst</string>
+    <string name="section_utkomst">Utkomst</string>
+
+    //FragmentLoginDialog
+    <string name="logga_in">Logga in</string>
+    <string name="fornamn">Förnman</string>
+    <string name="efternamn">Efternamn</string>
+
+</resources>
