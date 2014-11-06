@@ -1,19 +1,19 @@
 package com.princetronics.ekonomi.Fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import com.princetronics.ekonomi.Callback;
 import com.princetronics.ekonomi.R;
 
 /**
@@ -24,8 +24,11 @@ public class FragmentDialogLogin extends DialogFragment {
     // TAG
     private static final String TAG = "FragmentDialogLogin";
 
+    // Callback
+    private Callback caller;
+
     // SharedPreferences
-    private static SharedPreferences settings;
+    private static SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
     // Layout
@@ -39,12 +42,18 @@ public class FragmentDialogLogin extends DialogFragment {
     private EditText etFornamn, etEfternamn;
 
     @Override
+    public void onAttach(Activity activity) {
+        caller = (Callback) activity;
+        super.onAttach(activity);
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // SharedPreferences setup
-        settings = getActivity().getSharedPreferences("anvandare", 0);
-        editor = settings.edit();
+        preferences = getActivity().getSharedPreferences("anvandare", 0);
+        editor = preferences.edit();
 
 
         // Layout setup
@@ -68,9 +77,12 @@ public class FragmentDialogLogin extends DialogFragment {
                 editor.commit();
 
                 // Debug
-                settings = getActivity().getSharedPreferences("anvandare", 0);
-                Log.i(TAG, "Förnamn: " + settings.getString("etFornamn", "null"));
-                Log.i(TAG, "Efternamn: " + settings.getString("etEfternamn", "null"));
+                preferences = getActivity().getSharedPreferences("anvandare", 0);
+                Log.i(TAG, "Förnamn: " + preferences.getString("etFornamn", "null"));
+                Log.i(TAG, "Efternamn: " + preferences.getString("etEfternamn", "null"));
+
+                // Update Fragments with user data
+                caller.updateGUI();
             }
         });
         builder.setView(layout);

@@ -15,4 +15,12 @@
     <string name="fornamn">Förnman</string>
     <string name="efternamn">Efternamn</string>
 
+    //ListFragments
+    <string name="list_iv_kategori">Bildkategori</string>
+    <string name="list_tv_kategori">Textkategori</string>
+    <string name="list_tv_titel">Titel</string>
+    <string name="list_tv_date">Datum</string>
+    <string name="list_tv_belopp">Belopp</string>
+    <string name="list_tv_pris">Pris</string>
+
 </resources>

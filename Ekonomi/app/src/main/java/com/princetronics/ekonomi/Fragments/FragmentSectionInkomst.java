@@ -1,7 +1,7 @@
 package com.princetronics.ekonomi.Fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.princetronics.ekonomi.R;
 
 /**
- * Created by Prince on 11/5/2014.
+ * Created by Prince on 11/6/2014.
  */
 public class FragmentSectionInkomst extends Fragment {
 
@@ -19,5 +19,4 @@ public class FragmentSectionInkomst extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_section_inkomst, container, false);
         return rootView;
     }
-
 }

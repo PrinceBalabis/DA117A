@@ -2,28 +2,26 @@ package com.princetronics.ekonomi;
 
 import java.util.Locale;
 
-import android.app.Activity;
 import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.Activity;
 import android.content.SharedPreferences;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
+import android.support.v4.app.FragmentActivity;
+import com.princetronics.ekonomi.Database.DatabaseController;
 import com.princetronics.ekonomi.Fragments.FragmentDialogLogin;
-import com.princetronics.ekonomi.Fragments.FragmentSectionInkomst;
+import com.princetronics.ekonomi.Fragments.ListInkomst;
 import com.princetronics.ekonomi.Fragments.FragmentSectionOversikt;
 import com.princetronics.ekonomi.Fragments.FragmentSectionUtkomst;
 
 
-public class MainActivity extends Activity implements ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements Callback, ActionBar.TabListener  {
 
     // TAG
     private static final String TAG = "MainActivity";
@@ -32,19 +30,17 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 
-    // SharedPreferences
-    private static SharedPreferences settings;
+    // Database
+    private static SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private DatabaseController databaseController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Sharedpreferences setup
-        settings = getSharedPreferences("anvandare", 0);
-
         loginDialogInit();
-        SectionAdapterInit();
     }
 
 private void SectionAdapterInit(){
@@ -54,7 +50,7 @@ private void SectionAdapterInit(){
 
     // Create the adapter that will return a fragment for each of the three
     // primary sections of the activity.
-    mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+    mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
     // Set up the ViewPager with the sections adapter.
     mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -107,18 +103,27 @@ private void SectionAdapterInit(){
     }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
+    public void updateGUI() {
+        Log.i(TAG, "Update GUI method callback");
+
+        DatabaseInit();
+        SectionAdapterInit();
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
         mViewPager.setCurrentItem(tab.getPosition());
+
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
     }
 
     /**
@@ -140,9 +145,12 @@ private void SectionAdapterInit(){
                 case 0:
                     return new FragmentSectionOversikt();
                 case 1:
-                    return new FragmentSectionInkomst();
+                    Fragment fragmentSectionInkomst = new ListInkomst();
+                    return fragmentSectionInkomst;
                 case 2:
-                    return new FragmentSectionUtkomst();
+//                    Fragment fragmentSectionUtkomst = new FragmentSectionUtkomst();
+//                    return fragmentSectionUtkomst;
+                return new FragmentSectionOversikt();
             }
             return null;
 
@@ -173,4 +181,14 @@ private void SectionAdapterInit(){
         new FragmentDialogLogin().show(getFragmentManager(), TAG);
     }
 
+    private void DatabaseInit(){
+        preferences = getSharedPreferences("anvandare", 0);
+        String anvandare = preferences.getString("etFornamn", "null") + " " +
+                preferences.getString("etEfternamn", "null");
+        databaseController = new DatabaseController(this, anvandare);
+
+        // Debug
+        Log.i(TAG, "Förnamn: " + preferences.getString("etFornamn", "null"));
+        Log.i(TAG, "Efternamn: " + preferences.getString("etEfternamn", "null"));
+    }
 }
