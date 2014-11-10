@@ -1,0 +1,35 @@
+/* Här ska CSS skrivas */
+
+table, th, td {
+border: 1px solid black;
+border-collapse: collapse;
+background-color:#ffff99;
+}
+
+th, td {
+	padding: 5px;
+}
+
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: darkblue;
+	background-color: orange 
+}
+
+h1 {
+	font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif 
+}
+
+a:link{
+	/* Här definieras grundstilen för alla länkar */
+	color: purple
+}
+a:visited{
+	/* Gäller bara besökta länkar */
+	color: green 
+}
+a:hover, a:focus{
+	/* Gäller bara när muspekaren är över (hover), eller när
+	   länken är markerad med hjälp av tangenbordet (focus) */
+	color: red 
+}
