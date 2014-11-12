@@ -23,7 +23,7 @@ import com.princetronics.ekonomi.Fragments.FragmentSectionUtkomst;
 
 public class MainActivity extends FragmentActivity implements Callback, ActionBar.TabListener  {
 
-    // TAG
+    // TAG1
     private static final String TAG = "MainActivity";
 
     // Fragment section adapter
